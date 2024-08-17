@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -17,6 +19,12 @@ public class TransactionController {
     @Autowired
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    @GetMapping("/expenses-by-category")
+    public ResponseEntity<Map<String, BigDecimal>> getExpensesByCategory() {
+        Map<String, BigDecimal> expensesByCategory = transactionService.getExpensesByCategory();
+        return ResponseEntity.ok(expensesByCategory);
     }
 
     @GetMapping
