@@ -15,6 +15,8 @@ public class User {
     private String email;
     private String passoword;
 
+
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,10 @@ public class User {
 
 
     public void setPassword(String password) {
+    }
+
+    public String getPassword() {
+
+        return passoword;
     }
 }

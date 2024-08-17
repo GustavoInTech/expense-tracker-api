@@ -18,18 +18,38 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAll(){
+    // Método para criar um novo usuário
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    // Método para buscar todos os usuários
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User>findById(Long id){
-        return userRepository.findById(id);
+    // Método para buscar um usuário por ID
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User save(User user){
-        return  userRepository.save(user);
+    // Método para atualizar um usuário
+    public User updateUser(Long id, User userDetails) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setUsername(userDetails.getUsername());
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
+
+        return userRepository.save(user);
     }
-    public void delete(Long id ){
-        userRepository.deleteById(id);
+
+    // Método para deletar um usuário pelo ID
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.delete(user);
     }
+
 }
